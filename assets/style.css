@@ -184,7 +184,7 @@ body[data-page="archives"] .page-grid {
 /* ---------- Project page + Informations: the note ----------
    Built by _layouts/default.html. The note shows as written, top to bottom:
    row 2  : title (# heading) from column 3 | Type 7, Institution 8, Date 10, People below
-   row 3+ : the note in columns 3-8 — text runs in two columns, image rows full width */
+   row 3+ : the note in columns 3-8, top to bottom: one column of text, images full width */
 body[data-page="project"] .page-grid > *,
 body[data-page="informations"] .page-grid > * { min-width: 0; }
 
@@ -224,20 +224,18 @@ body[data-page="informations"] .page-grid > * { min-width: 0; }
 }
 body[data-page="informations"] .note { grid-row: 2; }
 
-.note > * + * { margin-top: var(--gutter); }
-
-/* Text: consecutive paragraphs flow in two columns */
-.text-run { column-count: 2; column-gap: var(--gutter); }
-.text-run > * { margin-bottom: 0.8em; }
-.text-run > :first-child { margin-top: 0; }
-.text-run ul, .text-run ol { padding-left: 1.2em; }
-.text-run h2, .text-run h3 { font-size: inherit; font-weight: 400; color: var(--muted); }
-.text-run model-viewer { column-span: all; display: block; width: 100%; aspect-ratio: 1 / 1; }
-
-/* Images: one row per group of images written on consecutive lines */
-.img-row { display: flex; gap: var(--gutter); align-items: flex-start; }
-.img-row img { flex: 1 1 0; min-width: 0; width: 100%; height: auto; display: block; }
-.img-row br { display: none; }
+/* The note reads like a markdown file: one column of text,
+   every image on its own line at the full width of the block. */
+.note > * + * { margin-top: 0.8em; }
+.note ul, .note ol { padding-left: 1.2em; }
+.note h2, .note h3 { font-size: inherit; font-weight: 400; color: var(--muted); }
+.note img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: var(--gutter) 0;
+}
+.note model-viewer { display: block; width: 100%; aspect-ratio: 1 / 1; }
 
 /* ---------- Medium windows: the note uses the full width ---------- */
 @media (max-width: 1199px) {
@@ -264,10 +262,8 @@ body[data-page="informations"] .note { grid-row: 2; }
   .note { grid-column: 1 / -1; grid-row: 4; margin-top: var(--gutter); }
   body[data-page="informations"] .note { grid-row: 2; margin-top: 0; }
 
-  .text-run { column-count: 1; }
   /* Images run edge to edge: no side margins */
-  .img-row { flex-direction: column; margin-left: calc(-1 * var(--margin)); margin-right: calc(-1 * var(--margin)); }
-  .img-row img { flex: none; }
+  .note img { width: calc(100% + 2 * var(--margin)); max-width: none; margin-left: calc(-1 * var(--margin)); }
 }
 
 /* ---------- Footer (© expands on click) ---------- */
