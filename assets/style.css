@@ -73,6 +73,11 @@ body[data-page="informations"] .page-grid,
 body[data-page="project"] .page-grid {
   grid-auto-rows: var(--row-h);
 }
+/* Project: nav + title rows keep the grid height, everything below grows with content */
+body[data-page="project"] .page-grid {
+  grid-template-rows: var(--row-h) var(--row-h);
+  grid-auto-rows: auto;
+}
 
 /* Archives: nav (1) + headers (2) fixed, list (3) absorbs slack, footer follows */
 body[data-page="archives"] .page-grid {
@@ -203,7 +208,13 @@ body[data-page="archives"] .page-grid {
 .info-education { grid-column: 1 / span 5;  grid-row: 4; }
 .info-awards    { grid-column: 6 / span 5;  grid-row: 3 / span 2; }
 
-/* ---------- Project page (archives/<slug>/) ---------- */
+/* ---------- Project page (archives/<slug>/) ----------
+   Built by _layouts/default.html from the note:
+   row 2  : title (# heading, cols 1-5)      | Type / Institution / Date / People (cols 7-10)
+   row 3  : main image <slug>_img-00 (1-5)   | text of the note (cols 7-10)
+   row 4  : image rows — each group of images on consecutive lines in the note = one row */
+body[data-page="project"] .page-grid > * { min-width: 0; }
+
 .project-title {
   grid-column: 1 / span 5;
   grid-row: 2;
@@ -215,82 +226,58 @@ body[data-page="archives"] .page-grid {
   letter-spacing: -0.02em;
   pointer-events: auto;
 }
-.project-award {
-  grid-column: 6 / span 3;
-  grid-row: 2;
-  align-self: end;
-  pointer-events: auto;
-}
-.project-collaborators {
-  grid-column: 9 / span 2;
-  grid-row: 2;
-  align-self: end;
-  justify-self: end;
-  text-align: right;
-  color: var(--muted);
-  pointer-events: auto;
-}
 
-/* Main image — square focal point, left half */
-.project-main-image {
+/* Same columns as the Archives list: Type 7, Institution 8-9, Date 10 */
+.project-meta {
+  grid-column: 7 / span 4;
+  grid-row: 2;
+  align-self: end;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: var(--gutter);
+  pointer-events: auto;
+}
+.project-meta > * { min-width: 0; }
+.pm-type   { grid-column: 1; }
+.pm-inst   { grid-column: 2 / span 2; }
+.pm-date   { grid-column: 4; text-align: right; }
+.pm-people { grid-column: 1 / span 4; grid-row: 2; margin-top: 0.4em; color: var(--muted); }
+
+.project-main {
   grid-column: 1 / span 5;
-  grid-row: 3 / span 3;
-  align-self: start;
-  pointer-events: auto;
-}
-.project-main-image img {
-  width: 100%;
-  display: block;
-  object-fit: cover;
-}
-
-/* Right column: metadata + subtitle + flowing body, grows with content */
-.project-info {
-  grid-column: 6 / span 5;
   grid-row: 3;
   align-self: start;
+  margin: 0;
   pointer-events: auto;
 }
+.project-main img { width: 100%; height: auto; display: block; }
 
-/* Metadata strip mirrors the 5 right-hand columns */
-.project-meta {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--gutter);
-  margin-bottom: 1.5em;
-}
-.pm-type { grid-column: 1; }
-.pm-inst { grid-column: 2 / span 3; }
-.pm-date { grid-column: 5; text-align: right; }
-.project-meta .ml {
-  display: block;
-  font-size: var(--body-size);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-  margin-bottom: 0.4em;
-}
-
-.project-subtitle {
-  font-size: var(--sub-size);
-  margin-bottom: 1.2em;
-}
-.project-body {
-  font-size: var(--body-size);
-  line-height: 1.5;
-  column-count: 2;
-  column-gap: var(--gutter);
-}
-.project-body p { margin-bottom: 0.8em; }
-
-/* Extra images flow full-width below */
-.project-extra {
-  grid-column: 1 / span 10;
+.project-text {
+  grid-column: 7 / span 4;
+  grid-row: 3;
   align-self: start;
+  font-size: var(--body-size);
+  line-height: 1.35;
   pointer-events: auto;
-  margin-top: var(--gutter);
 }
-.project-extra img { width: 100%; display: block; margin-bottom: var(--gutter); }
+.project-text p { margin-bottom: 0.8em; }
+.project-text a { color: inherit; }
+.project-text model-viewer { display: block; width: 100%; aspect-ratio: 1 / 1; }
+
+.project-gallery {
+  grid-column: 1 / span 10;
+  grid-row: 4;
+  margin-top: var(--gutter);
+  pointer-events: auto;
+}
+.project-gallery p {
+  display: flex;
+  gap: var(--gutter);
+  align-items: flex-start;
+  margin-bottom: var(--gutter);
+}
+.project-gallery img { flex: 1 1 0; min-width: 0; width: 100%; height: auto; display: block; }
+.project-gallery br { display: none; }
 
 /* ---------- Footer (© expands on click) ---------- */
 .footer {
