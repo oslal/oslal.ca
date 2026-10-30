@@ -22,37 +22,39 @@
     <a class="nav-item nav-archives" data-nav="archives"     href="/archives/">Archives</a>
     <a class="nav-item nav-info"     data-nav="informations" href="/informations/">Informations</a>
 
+    {% if page_id == "project" or page_id == "informations" %}
+    {% comment %}
+      The note is shown as written, top to bottom, in one block.
+      Project pages: the "# heading" becomes the title (row 2), properties sit beside it.
+      Runs of text become .text-run (two columns); paragraphs that start with an image become .img-row.
+    {% endcomment %}
+    {% assign body = content %}
     {% if page_id == "project" %}
-    {% comment %} Split the note: the # heading becomes the title, text goes right of the main image,
-       everything from the first image onward becomes the image rows. {% endcomment %}
-    {% assign slug = page.url | split: "/" | last %}
-    {% if content contains "</h1>" %}
-      {% assign h = content | split: "</h1>" %}
-      {% capture title_html %}{{ h[0] }}</h1>{% endcapture %}
-      {% capture body %}{% for x in h offset:1 %}{{ x }}{% endfor %}{% endcapture %}
-    {% else %}
-      {% assign title_html = "" %}
-      {% assign body = content %}
-    {% endif %}
-    {% assign b = body | split: "<p><img" %}
-    {% capture gallery %}{% for x in b offset:1 %}<p><img{{ x }}{% endfor %}{% endcapture %}
-
-    {{ title_html | replace_first: "<h1", '<h1 class="project-title"' }}
-
+      {% if content contains "</h1>" %}
+        {% assign h = content | split: "</h1>" %}
+        {{ h[0] | append: "</h1>" | replace_first: "<h1", '<h1 class="project-title"' }}
+        {% assign body = h | slice: 1, 9999 | join: "</h1>" %}
+      {% endif %}
     <div class="project-meta">
       <div class="pm-type">{{ page.Type }}</div>
       <div class="pm-inst">{{ page.Institution }}</div>
-      <div class="pm-date">{{ page.Date | slice: 0, 4 }}</div>
+      <div class="pm-date">{{ page.Date | date: "%d.%m.%Y" }}</div>
       {% if page.People %}<div class="pm-people">{{ page.People | join: ", " }}</div>{% endif %}
     </div>
+    {% endif %}
 
-    <figure class="project-main">
-      <img src="{{ slug }}_img-00.webp" alt="">
-    </figure>
-
-    <div class="project-text">{{ b[0] }}</div>
-
-    {% if gallery != "" %}<div class="project-gallery">{{ gallery }}</div>{% endif %}
+    <div class="note">
+      {% assign segs = body | split: "<p><img" %}
+      {% assign t = segs[0] | strip %}
+      {% if t != "" %}<div class="text-run">{{ segs[0] }}</div>{% endif %}
+      {% for seg in segs offset:1 %}
+        {% assign q = seg | split: "</p>" %}
+        <p class="img-row"><img{{ q[0] }}</p>
+        {% assign rest = q | slice: 1, 9999 | join: "</p>" %}
+        {% assign t = rest | strip %}
+        {% if t != "" %}<div class="text-run">{{ rest }}</div>{% endif %}
+      {% endfor %}
+    </div>
     {% else %}
     {{ content }}
     {% endif %}
