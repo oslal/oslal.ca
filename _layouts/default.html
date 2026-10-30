@@ -23,19 +23,39 @@
     <a class="nav-item nav-info"     data-nav="informations" href="/informations/">Informations</a>
 
     {% if page_id == "project" %}
+    {% comment %} Split the note: the # heading becomes the title, text goes right of the main image,
+       everything from the first image onward becomes the image rows. {% endcomment %}
     {% assign slug = page.url | split: "/" | last %}
-    <figure class="project-main">
-      <img src="{{ slug }}_img-00.webp" alt="">
-    </figure>
+    {% if content contains "</h1>" %}
+      {% assign h = content | split: "</h1>" %}
+      {% capture title_html %}{{ h[0] }}</h1>{% endcapture %}
+      {% capture body %}{% for x in h offset:1 %}{{ x }}{% endfor %}{% endcapture %}
+    {% else %}
+      {% assign title_html = "" %}
+      {% assign body = content %}
+    {% endif %}
+    {% assign b = body | split: "<p><img" %}
+    {% capture gallery %}{% for x in b offset:1 %}<p><img{{ x }}{% endfor %}{% endcapture %}
+
+    {{ title_html | replace_first: "<h1", '<h1 class="project-title"' }}
+
     <div class="project-meta">
       <div class="pm-type">{{ page.Type }}</div>
       <div class="pm-inst">{{ page.Institution }}</div>
       <div class="pm-date">{{ page.Date | slice: 0, 4 }}</div>
       {% if page.People %}<div class="pm-people">{{ page.People | join: ", " }}</div>{% endif %}
     </div>
-    {% endif %}
 
+    <figure class="project-main">
+      <img src="{{ slug }}_img-00.webp" alt="">
+    </figure>
+
+    <div class="project-text">{{ b[0] }}</div>
+
+    {% if gallery != "" %}<div class="project-gallery">{{ gallery }}</div>{% endif %}
+    {% else %}
     {{ content }}
+    {% endif %}
 
     <span class="footer">©<span class="full">&nbsp;2026 Oscar Lallier</span></span>
   </div>
