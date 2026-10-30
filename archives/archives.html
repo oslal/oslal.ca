@@ -1,0 +1,23 @@
+---
+---
+{% assign notes = site.pages | where_exp: "p", "p.path contains 'archives/'" | where_exp: "p", "p.ext == '.md'" %}
+{% assign notes = notes | sort: "Date", "last" | reverse %}
+
+<div class="col-head head-project">Project</div>
+<div class="col-head head-type">Type</div>
+<div class="col-head head-institution">Institution</div>
+<div class="col-head head-date">Date</div>
+
+<div class="project-list" id="project-list">
+  {% for p in notes %}
+  {% assign slug = p.url | split: "/" | last %}
+  <div class="project-row reveal" style="--i:{{ forloop.index0 }}" data-preview="/archives/{{ slug }}/{{ slug }}_img-00.webp">
+    <div class="p-name"><a href="{{ p.url }}">{{ p.title | default: slug }}</a></div>
+    <div class="p-type">{{ p.Type }}</div>
+    <div class="p-inst">{{ p.Institution }}</div>
+    <div class="p-date">{{ p.Date | slice: 0, 4 }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+<div id="list-preview"><img alt=""></div>
