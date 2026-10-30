@@ -24,9 +24,8 @@
 
     {% if page_id == "project" or page_id == "informations" %}
     {% comment %}
-      The note is shown as written, top to bottom, in one block.
+      The note is shown as written, top to bottom, in one block (columns 3-8).
       Project pages: the "# heading" becomes the title (row 2), properties sit beside it.
-      Runs of text become .text-run (two columns); paragraphs that start with an image become .img-row.
     {% endcomment %}
     {% assign body = content %}
     {% if page_id == "project" %}
@@ -44,16 +43,7 @@
     {% endif %}
 
     <div class="note">
-      {% assign segs = body | split: "<p><img" %}
-      {% assign t = segs[0] | strip %}
-      {% if t != "" %}<div class="text-run">{{ segs[0] }}</div>{% endif %}
-      {% for seg in segs offset:1 %}
-        {% assign q = seg | split: "</p>" %}
-        <p class="img-row"><img{{ q[0] }}</p>
-        {% assign rest = q | slice: 1, 9999 | join: "</p>" %}
-        {% assign t = rest | strip %}
-        {% if t != "" %}<div class="text-run">{{ rest }}</div>{% endif %}
-      {% endfor %}
+      {{ body }}
     </div>
     {% else %}
     {{ content }}
