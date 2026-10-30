@@ -1,5 +1,3 @@
-# oslal.ca
-
 ```mermaid
 graph LR
   root["oslal.ca (repo)"]
@@ -29,4 +27,18 @@ graph LR
   slug --> img1["&lt;slug&gt;_img-01.gif"]
   slug --> img2["&lt;slug&gt;_img-02.webp"]
   slug --> more["…"]
+
+  classDef root     fill:#ffffff,stroke:#000000,color:#000000
+  classDef assets   fill:#69caff,stroke:#0578b6,color:#000000
+  classDef archives fill:#7a77e0,stroke:#3430ab,color:#000000
+  classDef slug     fill:#40e5b8,stroke:#009169,color:#000000
+  classDef pages    fill:#ffc545,stroke:#bf8400,color:#000000
+  classDef layouts  fill:#f9dde9,stroke:#e680b1,color:#000000
+
+  class root,config,cname,readme root
+  class assets,css,js,font assets
+  class archives,list archives
+  class slug,md,img0,img1,img2,more slug
+  class pages,home,info pages
+  class layouts,default layouts
 ```
