@@ -134,19 +134,6 @@ function initFooter() {
   document.addEventListener('click', () => footer.classList.remove('open'));
 }
 
-/* ---------- Random welcome model (landing only) ---------- */
-function initModel() {
-  const mv = document.getElementById('model');
-  if (!mv) return;
-  const n = Math.floor(Math.random() * 7) + 1;       // 1..7
-  mv.setAttribute('src', `/assets/${n}.glb`);
-
-  const reveal = () => mv.classList.add('loaded');
-  mv.addEventListener('load', reveal);
-  /* Fallback in case the load event never fires */
-  setTimeout(reveal, 1200);
-}
-
 /* ---------- Reveal on scroll (archive rows) ---------- */
 function initReveal() {
   const els = document.querySelectorAll('.reveal');
@@ -187,7 +174,6 @@ window.addEventListener('DOMContentLoaded', () => {
   initPreview();
   initImages();
   drawGrid();
-  initModel();
   initReveal();
   watchHeight();
   requestAnimationFrame(drawGrid);

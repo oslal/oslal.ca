@@ -49,20 +49,6 @@ body {
 /* Landing is a single viewport (no scroll) */
 body[data-page="index"] { overflow: hidden; height: 100%; }
 
-/* ---------- Welcome model: full-screen, fades in on load ---------- */
-#model {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  background-color: transparent;
-  --progress-bar-color: transparent;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-#model.loaded { opacity: 1; }
-
 /* ---------- Page grid: 10 cols, 24px margin, 16px gutter ---------- */
 .page-grid {
   position: relative;
@@ -72,7 +58,7 @@ body[data-page="index"] { overflow: hidden; height: 100%; }
   gap: var(--gutter);
   padding: var(--margin);
   min-height: 100vh;
-  pointer-events: none;        /* clicks pass through to the model behind */
+  pointer-events: none;
 }
 
 /* Landing: fixed 6 rows filling the viewport */
@@ -368,7 +354,6 @@ body[data-page="project"] .footer { grid-row: auto; }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  #model { opacity: 1; transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .nav-item, .project-title { animation: none; }
   .footer .full { transition: none; }
