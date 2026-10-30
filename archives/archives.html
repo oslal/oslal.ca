@@ -1,6 +1,6 @@
 ---
 ---
-{% assign notes = site.pages | where_exp: "p", "p.path contains 'archives/'" | where_exp: "p", "p.ext == '.md'" %}
+{% assign notes = site.pages | where_exp: "p", "p.path contains 'archives/'" | where_exp: "p", "p.name contains '.md'" %}
 {% assign notes = notes | sort: "Date", "last" | reverse %}
 
 <div class="col-head head-project">Project</div>
