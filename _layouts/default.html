@@ -9,29 +9,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% if page_id == "index" %}Oscar Lallier{% elsif page_id == "archives" %}Archives — Oscar Lallier{% elsif page_id == "informations" %}Informations — Oscar Lallier{% else %}{{ page.title }} — Oscar Lallier{% endif %}</title>
   <link rel="stylesheet" href="/assets/style.css">
-  {% if page_id == "index" or content contains "<model-viewer" %}
+  {% if content contains "<model-viewer" %}
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
   {% endif %}
 </head>
 <body data-page="{{ page_id }}">
   <canvas id="grid-canvas"></canvas>
 
-  {% if page_id == "index" %}
-  <model-viewer
-    id="model"
-    alt="Welcome model"
-    camera-controls
-    auto-rotate
-    auto-rotate-delay="0"
-    rotation-per-second="12deg"
-    shadow-intensity="0.6"
-    shadow-softness="1"
-    environment-image="neutral"
-    exposure="1.1"
-    camera-orbit="45deg 70deg 150%"
-    tone-mapping="neutral">
-  </model-viewer>
-  {% endif %}
 
   <div class="page-grid">
     <a class="nav-item nav-name"     data-nav="index"        href="/">Oscar Lallier</a>
