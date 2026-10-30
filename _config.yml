@@ -1,0 +1,21 @@
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: "archives"
+    values:
+      permalink: /archives/:basename/
+  - scope:
+      path: "archives/archives.html"
+    values:
+      permalink: /archives/
+  - scope:
+      path: "pages/home.md"
+    values:
+      permalink: /
+  - scope:
+      path: "pages/informations.md"
+    values:
+      permalink: /informations/
