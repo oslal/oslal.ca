@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% if page.url == "/" %}{% assign page_id = "index" %}
+{% elsif page.url == "/archives/" %}{% assign page_id = "archives" %}
+{% elsif page.url == "/informations/" %}{% assign page_id = "informations" %}
+{% else %}{% assign page_id = "project" %}{% endif %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page_id == "index" %}Oscar Lallier{% elsif page_id == "archives" %}Archives — Oscar Lallier{% elsif page_id == "informations" %}Informations — Oscar Lallier{% else %}{{ page.title }} — Oscar Lallier{% endif %}</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  {% if page_id == "index" or content contains "<model-viewer" %}
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  {% endif %}
+</head>
+<body data-page="{{ page_id }}">
+  <canvas id="grid-canvas"></canvas>
+
+  {% if page_id == "index" %}
+  <model-viewer
+    id="model"
+    alt="Welcome model"
+    camera-controls
+    auto-rotate
+    auto-rotate-delay="0"
+    rotation-per-second="12deg"
+    shadow-intensity="0.6"
+    shadow-softness="1"
+    environment-image="neutral"
+    exposure="1.1"
+    camera-orbit="45deg 70deg 150%"
+    tone-mapping="neutral">
+  </model-viewer>
+  {% endif %}
+
+  <div class="page-grid">
+    <a class="nav-item nav-name"     data-nav="index"        href="/">Oscar Lallier</a>
+    <a class="nav-item nav-archives" data-nav="archives"     href="/archives/">Archives</a>
+    <a class="nav-item nav-info"     data-nav="informations" href="/informations/">Informations</a>
+
+    {% if page_id == "project" %}
+    {% assign slug = page.url | split: "/" | last %}
+    <figure class="project-main">
+      <img src="{{ slug }}_img-00.webp" alt="">
+    </figure>
+    <div class="project-meta">
+      <div class="pm-type">{{ page.Type }}</div>
+      <div class="pm-inst">{{ page.Institution }}</div>
+      <div class="pm-date">{{ page.Date | slice: 0, 4 }}</div>
+      {% if page.People %}<div class="pm-people">{{ page.People | join: ", " }}</div>{% endif %}
+    </div>
+    {% endif %}
+
+    {{ content }}
+
+    <span class="footer">©<span class="full">&nbsp;2026 Oscar Lallier</span></span>
+  </div>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>
