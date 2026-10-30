@@ -1,4 +1,5 @@
 ```mermaid
+%%{init: {"fontFamily": "PP Neue Montreal", "themeVariables": {"fontFamily": "PP Neue Montreal"}}}%%
 graph LR
   root["oslal.ca (repo)"]
 
@@ -28,12 +29,14 @@ graph LR
   slug --> img2["&lt;slug&gt;_img-02.webp"]
   slug --> more["…"]
 
-  classDef root     fill:#ffffff,stroke:#000000,color:#000000
-  classDef assets   fill:#69caff,stroke:#0578b6,color:#000000
-  classDef archives fill:#7a77e0,stroke:#3430ab,color:#000000
-  classDef slug     fill:#40e5b8,stroke:#009169,color:#000000
-  classDef pages    fill:#ffc545,stroke:#bf8400,color:#000000
-  classDef layouts  fill:#f9dde9,stroke:#e680b1,color:#000000
+  classDef root     fill:#ffffff,stroke:#000000,stroke-width:0.5px,color:#000000
+  classDef assets   fill:#69caff,stroke:#0578b6,stroke-width:0.5px,color:#000000
+  classDef archives fill:#7a77e0,stroke:#3430ab,stroke-width:0.5px,color:#000000
+  classDef slug     fill:#40e5b8,stroke:#009169,stroke-width:0.5px,color:#000000
+  classDef pages    fill:#ffc545,stroke:#bf8400,stroke-width:0.5px,color:#000000
+  classDef layouts  fill:#f9dde9,stroke:#e680b1,stroke-width:0.5px,color:#000000
+
+  linkStyle default stroke-width:0.5px
 
   class root,config,cname,readme root
   class assets,css,js,font assets
