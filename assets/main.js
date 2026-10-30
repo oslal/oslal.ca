@@ -1,7 +1,14 @@
 /* oslal — assets/main.js */
 
-/* Grid config — keep in sync with .page-grid + :root in assets/style.css */
-const GRID = { cols: 10, rows: 6, gutter: 16, margin: 24 };
+/* Grid: 10 columns, 6 rows per screen. Margin + gutter shrink with the window
+   (set in assets/style.css), so they're read from the page each time. */
+const GRID = { cols: 10, rows: 6 };
+function gridMetrics() {
+  const el = document.querySelector('.page-grid');
+  if (!el) return { m: 24, g: 16 };
+  const cs = getComputedStyle(el);
+  return { m: parseFloat(cs.paddingLeft) || 0, g: parseFloat(cs.columnGap) || 0 };
+}
 
 /* ---------- Persistent state (carries across pages) ---------- */
 const store = {
@@ -13,7 +20,8 @@ const store = {
 /* rowH = (100vh - 2*margin - (rows-1)*gutter) / rows. Mirrors --row-h in CSS. */
 function setRowHeightVar() {
   const H = window.innerHeight;
-  const rowH = (H - 2 * GRID.margin - (GRID.rows - 1) * GRID.gutter) / GRID.rows;
+  const { m, g } = gridMetrics();
+  const rowH = (H - 2 * m - (GRID.rows - 1) * g) / GRID.rows;
   document.documentElement.style.setProperty('--row-h', rowH + 'px');
   return rowH;
 }
@@ -42,7 +50,7 @@ function drawGrid() {
   ctx.lineWidth = 0.75;
   ctx.globalAlpha = 0.85;
 
-  const m = GRID.margin, g = GRID.gutter;
+  const { m, g } = gridMetrics();
   const colW = (W - 2 * m - (GRID.cols - 1) * g) / GRID.cols;
   const rowH = (window.innerHeight - 2 * m - (GRID.rows - 1) * g) / GRID.rows;
 
@@ -115,9 +123,9 @@ function initPreview() {
   list.addEventListener('mouseleave', hide);
 }
 
-/* ---------- Project pages: lazy-load gallery images ---------- */
+/* ---------- Notes: lazy-load images ---------- */
 function initImages() {
-  document.querySelectorAll('.project-gallery img').forEach(img => {
+  document.querySelectorAll('.note img').forEach(img => {
     img.loading = 'lazy';
     img.decoding = 'async';
   });

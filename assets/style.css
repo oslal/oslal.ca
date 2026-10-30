@@ -14,19 +14,19 @@
   --bg: #ffffff;
   --muted: #888888;
 
-  /* Grid — keep in sync with GRID in js/main.js */
-  --gutter: 16px;
-  --margin: 24px;
+  /* Grid — margins and gutters shrink with the window:
+     24px / 16px on wide screens, down to 12px / 8px on phones.
+     main.js reads the real values from .page-grid, so the green guides follow. */
+  --margin: clamp(12px, calc(12px + (100vw - 800px) * 0.03), 24px);
+  --gutter: clamp(8px, calc(8px + (100vw - 800px) * 0.02), 16px);
 
   /* Row height — JS overrides this with a px value on load/resize.
      Fallback mirrors the same formula: (100vh - 2*margin - 5*gutter)/6. */
   --row-h: calc((100vh - 48px - 80px) / 6);
 
   /* Typography scale */
-  --head-size:  24px;   /* column headers, section headings */
-  --title-size: 64px;   /* project title */
-  --sub-size:   16px;   /* subtitles */
-  --body-size:  10px;   /* dense body copy */
+  --head-size:  24px;   /* Archives column headers */
+  --title-size: 36px;   /* project title */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -73,8 +73,9 @@ body[data-page="informations"] .page-grid,
 body[data-page="project"] .page-grid {
   grid-auto-rows: var(--row-h);
 }
-/* Project: nav + title rows keep the grid height, everything below grows with content */
-body[data-page="project"] .page-grid {
+/* Project + Informations: nav + title rows keep the grid height, the note below grows with content */
+body[data-page="project"] .page-grid,
+body[data-page="informations"] .page-grid {
   grid-template-rows: var(--row-h) var(--row-h);
   grid-auto-rows: auto;
 }
@@ -116,14 +117,11 @@ body[data-page="archives"] .page-grid {
   vertical-align: 0.02em;
 }
 
-/* ---------- External link arrow ---------- */
-.ext-link {
-  color: inherit;
-  text-decoration: none;
-  pointer-events: auto;
-}
-.ext-link::after { content: '\2197'; margin-left: 0.15em; }   /* ↗ */
-.ext-link:hover { text-decoration: underline; }
+/* ---------- Links in notes: external ones get ↗ automatically ---------- */
+.note a { color: inherit; text-decoration: none; }
+.note a:hover { text-decoration: underline; }
+.note a[href^="http"]::after,
+.note a[href^="mailto"]::after { content: '\2197'; margin-left: 0.1em; }
 
 /* ---------- Archives: column headers (row 2) ---------- */
 .col-head {
@@ -183,46 +181,20 @@ body[data-page="archives"] .page-grid {
 #list-preview.visible { opacity: 1; }
 #list-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* ---------- Informations ---------- */
-.info-soon {
-  grid-column: 6 / span 5;
-  grid-row: 3;
-  align-self: start;
-  font-size: var(--head-size);
-}
-
-.info-section { pointer-events: auto; align-self: start; }
-.info-section .label {
-  font-size: var(--body-size);
-  letter-spacing: 0.04em;
-  color: var(--muted);
-  margin-bottom: 0.6em;
-}
-.info-section ul { list-style: none; }
-.info-section li { margin-bottom: 0.5em; }
-.info-section .sub { color: var(--muted); }
-.info-section a { color: inherit; }
-
-.info-contact   { grid-column: 1 / span 4;  grid-row: 2; }
-.info-experience{ grid-column: 1 / span 5;  grid-row: 3; }
-.info-education { grid-column: 1 / span 5;  grid-row: 4; }
-.info-awards    { grid-column: 6 / span 5;  grid-row: 3 / span 2; }
-
-/* ---------- Project page (archives/<slug>/) ----------
-   Built by _layouts/default.html from the note:
-   row 2  : title (# heading, cols 1-5)      | Type / Institution / Date / People (cols 7-10)
-   row 3  : main image <slug>_img-00 (1-5)   | text of the note (cols 7-10)
-   row 4  : image rows — each group of images on consecutive lines in the note = one row */
-body[data-page="project"] .page-grid > * { min-width: 0; }
+/* ---------- Project page + Informations: the note ----------
+   Built by _layouts/default.html. The note shows as written, top to bottom:
+   row 2  : title (# heading) from column 3 | Type 7, Institution 8, Date 10, People below
+   row 3+ : the note in columns 3-8 — text runs in two columns, image rows full width */
+body[data-page="project"] .page-grid > *,
+body[data-page="informations"] .page-grid > * { min-width: 0; }
 
 .project-title {
-  grid-column: 1 / span 5;
+  grid-column: 3 / span 4;
   grid-row: 2;
-  align-self: end;
-  text-align: right;
+  align-self: start;
   font-size: var(--title-size);
   font-weight: 400;
-  line-height: 1.0;
+  line-height: 1;
   letter-spacing: -0.02em;
   pointer-events: auto;
 }
@@ -231,7 +203,7 @@ body[data-page="project"] .page-grid > * { min-width: 0; }
 .project-meta {
   grid-column: 7 / span 4;
   grid-row: 2;
-  align-self: end;
+  align-self: start;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   column-gap: var(--gutter);
@@ -241,43 +213,62 @@ body[data-page="project"] .page-grid > * { min-width: 0; }
 .pm-type   { grid-column: 1; }
 .pm-inst   { grid-column: 2 / span 2; }
 .pm-date   { grid-column: 4; text-align: right; }
-.pm-people { grid-column: 1 / span 4; grid-row: 2; margin-top: 0.4em; color: var(--muted); }
+.pm-people { grid-column: 1 / span 3; grid-row: 2; margin-top: 0.3em; color: var(--muted); }
 
-.project-main {
-  grid-column: 1 / span 5;
+.note {
+  grid-column: 3 / span 6;
   grid-row: 3;
   align-self: start;
-  margin: 0;
+  line-height: 1.3;
   pointer-events: auto;
 }
-.project-main img { width: 100%; height: auto; display: block; }
+body[data-page="informations"] .note { grid-row: 2; }
 
-.project-text {
-  grid-column: 7 / span 4;
-  grid-row: 3;
-  align-self: start;
-  font-size: var(--body-size);
-  line-height: 1.35;
-  pointer-events: auto;
-}
-.project-text p { margin-bottom: 0.8em; }
-.project-text a { color: inherit; }
-.project-text model-viewer { display: block; width: 100%; aspect-ratio: 1 / 1; }
+.note > * + * { margin-top: var(--gutter); }
 
-.project-gallery {
-  grid-column: 1 / span 10;
-  grid-row: 4;
-  margin-top: var(--gutter);
-  pointer-events: auto;
+/* Text: consecutive paragraphs flow in two columns */
+.text-run { column-count: 2; column-gap: var(--gutter); }
+.text-run > * { margin-bottom: 0.8em; }
+.text-run > :first-child { margin-top: 0; }
+.text-run ul, .text-run ol { padding-left: 1.2em; }
+.text-run h2, .text-run h3 { font-size: inherit; font-weight: 400; color: var(--muted); }
+.text-run model-viewer { column-span: all; display: block; width: 100%; aspect-ratio: 1 / 1; }
+
+/* Images: one row per group of images written on consecutive lines */
+.img-row { display: flex; gap: var(--gutter); align-items: flex-start; }
+.img-row img { flex: 1 1 0; min-width: 0; width: 100%; height: auto; display: block; }
+.img-row br { display: none; }
+
+/* ---------- Medium windows: the note uses the full width ---------- */
+@media (max-width: 1199px) {
+  .project-title { grid-column: 1 / span 6; }
+  .note { grid-column: 1 / span 10; }
 }
-.project-gallery p {
-  display: flex;
-  gap: var(--gutter);
-  align-items: flex-start;
-  margin-bottom: var(--gutter);
+
+/* ---------- Phones: everything stacks in one column ---------- */
+@media (max-width: 799px) {
+  .nav-name     { grid-column: 1 / span 4; }
+  .nav-archives { grid-column: 5 / span 3; }
+  .nav-info     { grid-column: 8 / span 3; justify-self: end; }
+
+  /* Archives: name + year only, no hover preview */
+  .head-type, .head-institution, .p-type, .p-inst, #list-preview { display: none; }
+  .head-project, .p-name { grid-column: 1 / span 8; }
+  .head-date, .p-date    { grid-column: 9 / span 2; }
+
+  body[data-page="project"] .page-grid { grid-template-rows: var(--row-h) auto auto; }
+  .project-title { grid-column: 1 / -1; font-size: 28px; }
+  .project-meta  { grid-row: 3; grid-column: 1 / -1; display: block; margin-top: var(--gutter); }
+  .project-meta > * { text-align: left; }
+  .pm-people { margin-top: 0; }
+  .note { grid-column: 1 / -1; grid-row: 4; margin-top: var(--gutter); }
+  body[data-page="informations"] .note { grid-row: 2; margin-top: 0; }
+
+  .text-run { column-count: 1; }
+  /* Images run edge to edge: no side margins */
+  .img-row { flex-direction: column; margin-left: calc(-1 * var(--margin)); margin-right: calc(-1 * var(--margin)); }
+  .img-row img { flex: none; }
 }
-.project-gallery img { flex: 1 1 0; min-width: 0; width: 100%; height: auto; display: block; }
-.project-gallery br { display: none; }
 
 /* ---------- Footer (© expands on click) ---------- */
 .footer {
