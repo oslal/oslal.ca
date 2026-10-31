@@ -5,6 +5,9 @@ Type: Master's Project
 People:
   - Oscar Lallier
 ---
+
+# Prototyping Forest Resilience
+
 Prototyping Forest Resilience, my final M.Arch. project at McGill University, operates from one premise: “Every timber specification is a silvicultural prescription.” SPF dependence in construction embeds monoculture in planted forests as climate change restructures Quebec's species composition and pushes tree species northward. 
 
 Through a trait-based filter, Quebec species are systematically assessed, assemblies iterated, and one envelope developed into a 1:1 wall prototype. A Norway maple, an invasive species compression wall with yellow birch dowels and compressed straw insulation surpasses Passive House requirements, is a net carbon sink, and employs undervalued hardwood species.
