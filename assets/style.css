@@ -7,6 +7,14 @@
   font-style: normal;
   font-display: swap;
 }
+/* Medium — used for ##### headings in notes. Upload PPNeueMontreal-Medium.otf to assets/ */
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('/assets/PPNeueMontreal-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --guide: #00ff00;
@@ -244,7 +252,12 @@ body[data-page="informations"] .note { grid-row: 2; }
 /* Horizontal rule (--- in the note): hairline, 0.25pt */
 .note hr { border: 0; border-top: 0.25pt solid var(--fg); margin: 1.2em 0; }
 .note ul, .note ol { padding-left: 1.2em; }
-.note h2, .note h3 { font-size: inherit; font-weight: 400; color: var(--muted); }
+/* Headings in notes — odd levels only (# is the page title):
+   ###    section heading: large, same size as the Archives column headers
+   #####  sub-heading: text size, Medium weight */
+.note h3 { font-size: var(--head-size); font-weight: 400; line-height: 1; letter-spacing: -0.02em; margin-top: 1.6em; }
+.note h5 { font-size: inherit; font-weight: 500; margin-top: 1.4em; }
+.note > :first-child { margin-top: 0; }
 .note img {
   display: block;
   width: 100%;
