@@ -239,6 +239,10 @@ body[data-page="informations"] .note { grid-row: 2; }
 /* The note reads like a markdown file: one column of text,
    every image on its own line at the full width of the block. */
 .note > * + * { margin-top: 0.8em; }
+/* A line break in the note is a line break on the page, as in Obsidian */
+.note p { white-space: pre-line; }
+/* Horizontal rule (--- in the note): hairline, 0.25pt */
+.note hr { border: 0; border-top: 0.25pt solid var(--fg); margin: 1.2em 0; }
 .note ul, .note ol { padding-left: 1.2em; }
 .note h2, .note h3 { font-size: inherit; font-weight: 400; color: var(--muted); }
 .note img {
