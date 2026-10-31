@@ -123,6 +123,18 @@ body[data-page="archives"] .page-grid {
 .note a[href^="http"]::after,
 .note a[href^="mailto"]::after { content: '\2197'; margin-left: 0.1em; }
 
+/* In-text links only (inside a paragraph or list of the note):
+   link text in Times New Roman, tracking -33 (= -0.033em); the ↗ stays in PP Neue Montreal */
+.note p a, .note li a {
+  font-family: 'Times New Roman', Times, serif;
+  letter-spacing: -0.033em;
+}
+.note p a::after, .note li a::after {
+  font-family: 'PP Neue Montreal', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  letter-spacing: -0.01em;
+  display: inline-block;   /* keeps the hover underline off the arrow */
+}
+
 /* ---------- Archives: column headers (row 2) ---------- */
 .col-head {
   grid-row: 2;
