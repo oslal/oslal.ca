@@ -73,6 +73,18 @@ body {
 /* Landing is a single viewport (no scroll) */
 body[data-page="index"] { overflow: hidden; height: 100%; }
 
+/* ---------- Homepage: a 3D model written in pages/home.md fills the screen, behind the tabs ---------- */
+body[data-page="index"] model-viewer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: auto;
+  background-color: transparent;
+  --progress-bar-color: transparent;
+}
+
 /* ---------- Page grid: 10 cols, 24px margin, 16px gutter ---------- */
 .page-grid {
   position: relative;
