@@ -140,6 +140,9 @@ body[data-page="archives"] .page-grid {
 .nav-name     { grid-column: 1;  grid-row: 1; }
 .nav-archives { grid-column: 7;  grid-row: 1; }
 .nav-info     { grid-column: 8;  grid-row: 1; }
+/* "Work in progress" note, top right — plain text, not a link */
+.nav-wip      { grid-column: 9 / span 2; grid-row: 1; justify-self: end; white-space: nowrap; cursor: default; }
+.nav-wip:hover { opacity: 1; }
 
 /* Active-page indicator — filled circle */
 .nav-item.active::after {
@@ -305,6 +308,7 @@ body[data-page="informations"] .note { grid-row: 2; }
   .nav-name     { grid-column: 1 / span 4; }
   .nav-archives { grid-column: 5 / span 3; }
   .nav-info     { grid-column: 8 / span 3; justify-self: end; }
+  .nav-wip      { display: none; }   /* no room on phones */
 
   /* Archives: name + year only, no hover preview */
   .head-type, .head-institution, .p-type, .p-inst, #list-preview { display: none; }
@@ -367,6 +371,7 @@ body[data-page="project"] .footer { grid-row: auto; }
 .nav-name     { animation-delay: 0.00s; }
 .nav-archives { animation-delay: 0.06s; }
 .nav-info     { animation-delay: 0.12s; }
+.nav-wip      { animation-delay: 0.18s; }
 
 /* Project title rises in */
 .project-title { animation: navIn 0.6s ease both; animation-delay: 0.1s; }
