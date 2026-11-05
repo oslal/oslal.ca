@@ -13,8 +13,15 @@ In order to combat the housing crisis in Quebec, and to enable younger people to
 Supervised by [Yves Weinand](https://people.epfl.ch/yves.weinand?lang=fr) (Prof., PhD.) and assisted by [Agathe Mignon](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://people.epfl.ch/agathe.mignon%3Flang%3Dfr&ved=2ahUKEwj19I7P_-SXAxUAtokEHXo6FoUQFnoECBcQAQ&usg=AOvVaw2iQwb-8Yv_xf_q02ylnixY) (Assist,. PhD.), [Studio Weinand](https://www.epfl.ch/labs/ibois/teaching-2/studio-weinand/reinvent-log-architecture-autumn-2023/) stands at the intersection of engineering and architecture to study wood, from territory to material. In the first phase of the semester, students undertook research into log architecture, seeking to integrate raw wood production into the construction process to solve its challenges. The second phase was devoted to the creation of 1:1 scale model details, highlighting the ecological advantages of wood while minimizing the transport and transformation required.
 
 A detailed archives of this project lives on École Polytechnique Fédérale de Lausanne's [Living Archives](https://livingarchives.epfl.ch/projects/6017/dansl-bois/) website.
+
 ![](dans-l-bois_img-00.webp)
-(more images coming soon)
+![](dans-l-bois_img-01.webp)
+![](dans-l-bois_img-02.webp)
+![](dans-l-bois_img-03.webp)
+![](dans-l-bois_img-04.webp)
+![](dans-l-bois_img-05.webp)![](dans-l-bois_img-06.webp)
+![](dans-l-bois_img-07.webp)
+![](dans-l-bois_img-08.gif)
 
 ---
 
