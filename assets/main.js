@@ -173,6 +173,13 @@ function watchHeight() {
   ro.observe(grid);
 }
 
+/* ---------- Images: no right-click / drag-to-save (a deterrent, not real protection) ---------- */
+function protectImages() {
+  const isImg = (t) => t && (t.tagName === 'IMG' || t.tagName === 'MODEL-VIEWER');
+  document.addEventListener('contextmenu', (e) => { if (isImg(e.target)) e.preventDefault(); });
+  document.addEventListener('dragstart',   (e) => { if (isImg(e.target)) e.preventDefault(); });
+}
+
 /* ---------- Init ---------- */
 window.addEventListener('DOMContentLoaded', () => {
   setRowHeightVar();
@@ -181,6 +188,7 @@ window.addEventListener('DOMContentLoaded', () => {
   applyGuides();
   initPreview();
   initImages();
+  protectImages();
   drawGrid();
   initReveal();
   watchHeight();
